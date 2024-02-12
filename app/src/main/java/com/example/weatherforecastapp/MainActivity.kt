@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.weatherforecastapp.navigation.WeatherForecastNavHost
 import com.example.weatherforecastapp.ui.theme.WeatherForecastAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun WeatherForecastContent() {
+fun WeatherForecastContent(
+    mainViewModel: MainViewModel = hiltViewModel(mainActivity())
+) {
     WeatherForecastNavHost()
 }

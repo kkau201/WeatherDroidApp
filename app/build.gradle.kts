@@ -70,6 +70,9 @@ dependencies {
     // Hilt Dagger
     val hiltVersion = "2.50"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    testImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 
     // Room
