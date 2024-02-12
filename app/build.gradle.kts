@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
+    id ("com.google.devtools.ksp")
 }
 
 android {
@@ -64,4 +67,22 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    //Hilt Dagger
+    val hiltVersion = "2.50"
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
+
+    //Room
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    // To use Kotlin annotation processing tool (kapt)
+    ksp("androidx.room:room-compiler:$roomVersion")
+    // KTX for coroutines
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    //Compose Destination
+    val composeDestVersion = "1.10.0"
+    implementation("io.github.raamcosta.compose-destinations:core:$composeDestVersion")
+    ksp("io.github.raamcosta.compose-destinations:ksp:$composeDestVersion")
 }
