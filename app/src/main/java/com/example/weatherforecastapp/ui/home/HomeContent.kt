@@ -1,17 +1,24 @@
 package com.example.weatherforecastapp.ui.home
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.weatherforecastapp.R
 import com.example.weatherforecastapp.components.WeatherStateImage
 import com.example.weatherforecastapp.mainActivity
 import com.example.weatherforecastapp.model.Forecast
@@ -19,19 +26,32 @@ import com.example.weatherforecastapp.ui.theme.AppTheme
 import com.example.weatherforecastapp.ui.theme.Typography
 import com.example.weatherforecastapp.utils.Constants.WEATHER_ICON_BASE_URL
 import com.example.weatherforecastapp.utils.formatTempToCelsius
+import com.example.weatherforecastapp.utils.formatUnixTimeToDate
 
 @Composable
 fun TodayWeatherSection(
     forecast: Forecast
 ) {
-    val imgUrl = "$WEATHER_ICON_BASE_URL${forecast.weather[0].icon}.png"
-
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        TodayWeatherTemp(forecast = forecast)
+        TodayWeatherDetails(forecast = forecast)
+    }
+}
+
+@Composable
+fun TodayWeatherTemp(forecast: Forecast) {
+    val imgUrl = "$WEATHER_ICON_BASE_URL${forecast.weather[0].icon}.png"
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(bottom = AppTheme.spacing.mdSpacing)
+    ) {
         Text(
-            text = "Tue 13 Feb, 2024",
+            text = forecast.dt.formatUnixTimeToDate(),
             style = Typography.labelMedium,
             modifier = Modifier.padding(vertical = AppTheme.spacing.smSpacing)
         )
@@ -57,5 +77,50 @@ fun TodayWeatherSection(
                 modifier = Modifier.padding(bottom = AppTheme.spacing.smSpacing)
             )
         }
+    }
+}
+
+@Composable
+fun TodayWeatherDetails(forecast: Forecast) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .padding(AppTheme.spacing.smSpacing)
+            .fillMaxWidth()
+    ) {
+        TodayWeatherDetailsItem(
+            text = stringResource(R.string.humidity_percentage, forecast.humidity),
+            icon = R.drawable.humidity,
+            desc = stringResource(R.string.cont_desc_humidity_icon)
+        )
+        TodayWeatherDetailsItem(
+            text = stringResource(R.string.psi, forecast.pressure),
+            icon = R.drawable.pressure,
+            desc = stringResource(R.string.cont_desc_pressure_icon)
+        )
+        TodayWeatherDetailsItem(
+            text = stringResource(R.string.kph, forecast.gust),
+            icon = R.drawable.wind,
+            desc = stringResource(R.string.cont_desc_wind_icon)
+        )
+    }
+}
+
+@Composable
+fun TodayWeatherDetailsItem(
+    text: String,
+    @DrawableRes icon: Int,
+    desc: String
+) {
+    Row {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = desc,
+            modifier = Modifier
+                .padding(end = AppTheme.spacing.xsmSpacing)
+                .size(20.dp)
+        )
+        Text(text = text, style = AppTheme.typography.labelLarge)
     }
 }

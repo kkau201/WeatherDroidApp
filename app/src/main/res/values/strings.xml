@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">WeatherForecastApp</string>
 
-    <string name="celsius_temp">%s°C</string>
-    <string name="fahrenheit_temp">%s°F</string>
+    <string name="celsius_temp">%.0f°C</string>
+    <string name="fahrenheit_temp">%.0f°F</string>
+    <string name="kph">%.2f kph</string>
+    <string name="psi">%d psi</string>
+    <string name="humidity_percentage">%d%%</string>
+
+    <string name="cont_desc_humidity_icon">Humidity icon</string>
+    <string name="cont_desc_pressure_icon">Pressure icon</string>
+    <string name="cont_desc_wind_icon">Wind icon</string>
 </resources>
