@@ -3,39 +3,63 @@ package com.example.weatherforecastapp.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Blue,
+    secondary = Yellow,
+    tertiary = DarkBlue
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = Blue,
+    secondary = Yellow,
+    tertiary = DarkBlue,
+    background = LightBlue,
+    surface = MediumBlue,
     onPrimary = Color.White,
-    onSecondary = Color.White,
+    onSecondary = Color.Black,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onBackground = Color.Black,
+    onSurface = Color.White,
 )
+
+private val LocalColors = staticCompositionLocalOf { LightColorScheme }
+private val LocalTypography = staticCompositionLocalOf { Typography }
+private val LocalSpacing = staticCompositionLocalOf { Spacing() }
+
+object AppTheme {
+    val colors: ColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalColors.current
+
+    val typography: Typography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypography.current
+
+    val spacing: Spacing
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSpacing.current
+}
 
 @Composable
 fun WeatherForecastAppTheme(
