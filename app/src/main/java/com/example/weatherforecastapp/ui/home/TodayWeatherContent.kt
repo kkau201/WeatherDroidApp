@@ -32,16 +32,16 @@ import com.example.weatherforecastapp.utils.formatUnixTimeToTime
 
 @Composable
 fun TodayWeatherSection(
-    forecast: Forecast
+    dayForecast: Forecast
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TodayWeatherTemp(forecast = forecast)
-        TodayWeatherHWPDetails(humidity = forecast.humidity, pressure = forecast.pressure, gust = forecast.gust)
+        TodayWeatherTemp(forecast = dayForecast)
+        TodayWeatherHWPDetails(humidity = dayForecast.humidity, pressure = dayForecast.pressure, gust = dayForecast.gust)
         Divider()
-        TodayWeatherSSDetails(sunrise = forecast.sunrise, sunset = forecast.sunset)
+        TodayWeatherSSDetails(sunrise = dayForecast.sunrise, sunset = dayForecast.sunset)
     }
 }
 

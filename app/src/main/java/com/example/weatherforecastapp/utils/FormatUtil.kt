@@ -16,6 +16,12 @@ fun Int.formatUnixTimeToDate() : String {
     return sdf.format(date)
 }
 
+fun Int.formatUnixTimeToDay() : String {
+    val sdf = SimpleDateFormat("EEE", Locale.getDefault())
+    val date = Date(this.toLong() * 1000)
+    return sdf.format(date)
+}
+
 fun Int.formatUnixTimeToTime() : String {
     val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
     val date = Date(this.toLong() * 1000)

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -47,11 +46,10 @@ fun HomeScreen(
                 .pullRefresh(pullRefreshState)
                 .verticalScroll(rememberScrollState())
         ) {
-            PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
-
             if (uiState.value is LoadedState) {
                 HomeContent(weather = (uiState.value as LoadedState).weather, modifier = Modifier.padding(padding))
             }
+            PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
         }
     }
 
@@ -70,6 +68,7 @@ fun HomeContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
-        TodayWeatherSection(forecast = weather.list[0])
+        TodayWeatherSection(dayForecast = weather.list[0])
+        WeekWeatherSection(weekForecast = weather.list)
     }
 }
