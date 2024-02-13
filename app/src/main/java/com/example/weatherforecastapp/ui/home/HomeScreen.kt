@@ -4,10 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
+import androidx.compose.material.Scaffold
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -20,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.weatherforecastapp.common.ViewModelBinding
 import com.example.weatherforecastapp.model.Weather
+import com.example.weatherforecastapp.widgets.WeatherAppBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -34,14 +36,22 @@ fun HomeScreen(
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullRefreshState(isRefreshing, { viewModel.refresh() })
+    Scaffold (
+        modifier = Modifier.fillMaxSize(),
+        topBar = { WeatherAppBar(title = (uiState.value as? LoadedState)?.cityName) }
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
+                .verticalScroll(rememberScrollState())
+        ) {
+            PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
 
-    Box(
-        modifier = Modifier
-            .pullRefresh(pullRefreshState)
-            .verticalScroll(rememberScrollState())
-    ) {
-        PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
-        if (uiState.value is LoadedState) HomeContent((uiState.value as LoadedState).weather)
+            if (uiState.value is LoadedState) {
+                HomeContent(weather = (uiState.value as LoadedState).weather, modifier = Modifier.padding(padding))
+            }
+        }
     }
 
     LaunchedEffect(key1 = Unit, block = {
@@ -51,13 +61,16 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    weather: Weather
+    weather: Weather,
+    modifier: Modifier = Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "City: ${weather.city}")
+        TodayWeatherSection(
+            forecast = weather.list[0]
+        )
     }
 }

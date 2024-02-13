@@ -8,4 +8,6 @@ object Constants {
     const val DEFAULT_UNITS = "metric"
     const val DEFAULT_DAYS = "7"
     const val DEFAULT_CITY_LIMITS = "5"
+
+    const val WEATHER_ICON_BASE_URL = "https://openweathermap.org/img/wn/"
 }

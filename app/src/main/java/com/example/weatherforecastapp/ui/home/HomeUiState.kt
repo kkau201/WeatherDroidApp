@@ -8,4 +8,8 @@ data object LoadingState: HomeUiState()
 
 data class LoadedState(
     val weather: Weather
-): HomeUiState()
+): HomeUiState() {
+
+    val cityName: String
+        get() = "${weather.city.name}, ${weather.city.country}"
+}
