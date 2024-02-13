@@ -10,4 +10,6 @@
     <string name="cont_desc_humidity_icon">Humidity icon</string>
     <string name="cont_desc_pressure_icon">Pressure icon</string>
     <string name="cont_desc_wind_icon">Wind icon</string>
+    <string name="cont_desc_sunrise_icon">Sunrise icon</string>
+    <string name="cont_desc_sunset_icon">Sunset icon</string>
 </resources>

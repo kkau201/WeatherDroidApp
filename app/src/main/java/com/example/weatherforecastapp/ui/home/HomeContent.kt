@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import com.example.weatherforecastapp.ui.theme.Typography
 import com.example.weatherforecastapp.utils.Constants.WEATHER_ICON_BASE_URL
 import com.example.weatherforecastapp.utils.formatTempToCelsius
 import com.example.weatherforecastapp.utils.formatUnixTimeToDate
+import com.example.weatherforecastapp.utils.formatUnixTimeToTime
 
 @Composable
 fun TodayWeatherSection(
@@ -37,7 +39,9 @@ fun TodayWeatherSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TodayWeatherTemp(forecast = forecast)
-        TodayWeatherDetails(forecast = forecast)
+        TodayWeatherHWPDetails(humidity = forecast.humidity, pressure = forecast.pressure, gust = forecast.gust)
+        Divider()
+        TodayWeatherSSDetails(sunrise = forecast.sunrise, sunset = forecast.sunset)
     }
 }
 
@@ -81,28 +85,50 @@ fun TodayWeatherTemp(forecast: Forecast) {
 }
 
 @Composable
-fun TodayWeatherDetails(forecast: Forecast) {
+fun TodayWeatherHWPDetails(humidity: Int, pressure: Int, gust: Double) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .padding(AppTheme.spacing.smSpacing)
             .fillMaxWidth()
     ) {
         TodayWeatherDetailsItem(
-            text = stringResource(R.string.humidity_percentage, forecast.humidity),
+            text = stringResource(R.string.humidity_percentage, humidity),
             icon = R.drawable.humidity,
             desc = stringResource(R.string.cont_desc_humidity_icon)
         )
         TodayWeatherDetailsItem(
-            text = stringResource(R.string.psi, forecast.pressure),
+            text = stringResource(R.string.psi, pressure),
             icon = R.drawable.pressure,
             desc = stringResource(R.string.cont_desc_pressure_icon)
         )
         TodayWeatherDetailsItem(
-            text = stringResource(R.string.kph, forecast.gust),
+            text = stringResource(R.string.kph, gust),
             icon = R.drawable.wind,
             desc = stringResource(R.string.cont_desc_wind_icon)
+        )
+    }
+}
+
+@Composable
+fun TodayWeatherSSDetails(sunrise: Int, sunset: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(AppTheme.spacing.smSpacing)
+            .fillMaxWidth()
+    ) {
+        TodayWeatherDetailsItem(
+            text = sunrise.formatUnixTimeToTime(),
+            icon = R.drawable.sunrise,
+            desc = stringResource(R.string.cont_desc_sunrise_icon)
+        )
+        TodayWeatherDetailsItem(
+            text = sunset.formatUnixTimeToTime(),
+            icon = R.drawable.sunset,
+            desc = stringResource(R.string.cont_desc_sunset_icon)
         )
     }
 }

@@ -15,3 +15,9 @@ fun Int.formatUnixTimeToDate() : String {
     val date = Date(this.toLong() * 1000)
     return sdf.format(date)
 }
+
+fun Int.formatUnixTimeToTime() : String {
+    val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    val date = Date(this.toLong() * 1000)
+    return sdf.format(date)
+}

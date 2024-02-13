@@ -71,6 +71,5 @@ fun HomeContent(
         modifier = modifier.fillMaxSize()
     ) {
         TodayWeatherSection(forecast = weather.list[0])
-        Divider()
     }
 }
