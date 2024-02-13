@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.weatherforecastapp.components.LoadingLottie
 import com.example.weatherforecastapp.navigation.WeatherForecastNavHost
 import com.example.weatherforecastapp.ui.theme.WeatherForecastAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,4 +36,7 @@ fun WeatherForecastContent(
     mainViewModel: MainViewModel = hiltViewModel(mainActivity())
 ) {
     WeatherForecastNavHost()
+
+    val loadingState by mainViewModel.loadingFlow.collectAsState()
+    LoadingLottie(isLoading = loadingState)
 }

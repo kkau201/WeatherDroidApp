@@ -32,7 +32,7 @@ fun SplashScreen(
 
     LaunchedEffect(key1 = Unit, block = {
         // Show splash screen for 7 seconds
-        delay(7000L)
+        delay(3000L)
         viewModel.navigateToHome()
     })
 

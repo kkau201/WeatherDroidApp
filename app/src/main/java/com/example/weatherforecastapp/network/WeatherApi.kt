@@ -19,7 +19,7 @@ interface WeatherApi {
     @GET(value = "data/2.5/forecast/daily")
     suspend fun getDailyForecast(
         @Query("lat") lat: String,
-        @Query("long") long: String,
+        @Query("lon") lon: String,
         @Query("cnt") cnt: String = Constants.DEFAULT_DAYS,
         @Query("units") units: String = Constants.DEFAULT_UNITS,
         @Query("appid") appid: String = Constants.API_KEY
